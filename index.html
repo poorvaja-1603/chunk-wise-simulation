@@ -39,7 +39,11 @@
           <div id="inspectorContent" class="inspector-content"><div class="empty-inspector"><span>⌁</span><b>Select a component</b><small>Choose a node in the diagram to view and edit its settings.</small></div></div>
         </aside>
       </section>
-      <section class="panel charts-panel"><div class="panel-header chart-header"><div><div class="eyebrow">PERFORMANCE OVER TIME</div><h2>Latency &amp; queue depth</h2></div><div class="chart-legend"><span><i class="line-key latency"></i> P95 latency</span><span><i class="line-key queue"></i> Engine queue</span><button id="clearChart" class="icon-button" title="Clear chart history">↺</button></div></div><div class="chart-area"><canvas id="chart" aria-label="Latency and queue chart"></canvas><div class="chart-empty" id="chartEmpty">Start the simulation to collect metrics</div></div><div class="chart-xlabels"><span>60s ago</span><span>30s ago</span><span>Now</span></div></section>
+      <section class="charts-section"><div class="charts-section-header"><div><div class="eyebrow">PERFORMANCE OVER THE LAST 60 SECONDS</div><h2>Simulation charts</h2></div><button id="clearChart" class="icon-button" title="Clear chart history">↺</button></div><div class="charts-grid">
+        <article class="panel chart-card"><div class="chart-card-head"><div><div class="chart-kicker">LATENCY</div><h3>Request latency</h3></div><span class="chart-unit">milliseconds</span></div><div class="chart-kpis"><span>P50 <b id="latencyP50">—</b></span><span>P95 <b id="latencyP95">—</b></span><span>P99 <b id="latencyP99">—</b></span></div><div class="chart-area"><canvas id="latencyChart" aria-label="P50, P95, P99 latency over the last 60 seconds"></canvas><div class="chart-empty">Start simulation to collect metrics</div></div><div class="chart-legend"><span><i class="line-key p50"></i>P50</span><span><i class="line-key latency"></i>P95</span><span><i class="line-key p99"></i>P99</span></div></article>
+        <article class="panel chart-card"><div class="chart-card-head"><div><div class="chart-kicker">THROUGHPUT</div><h3>Requests per second</h3></div><span class="chart-unit" id="throughputNow">— req/s</span></div><div class="chart-area"><canvas id="throughputChart" aria-label="Offered, succeeded, and lost throughput"></canvas><div class="chart-empty">Start simulation to collect metrics</div></div><div class="chart-legend"><span><i class="line-key offered"></i>Offered</span><span><i class="line-key succeeded"></i>Succeeded</span><span><i class="line-key lost"></i>Lost</span></div></article>
+        <article class="panel chart-card"><div class="chart-card-head"><div><div class="chart-kicker">FAILURES</div><h3>Failed requests</h3></div><span class="chart-unit failure-unit" id="failuresNow">— /s</span></div><div class="chart-area"><canvas id="failuresChart" aria-label="Failed requests per second"></canvas><div class="chart-empty">Start simulation to collect metrics</div></div><div class="chart-legend"><span><i class="line-key failures"></i>Failures per second</span></div></article>
+      </div></section>
       <section class="footnote"><span>MODEL NOTE</span><p>Educational queueing simulation: system P99 comes from simulated request samples; component P99 values are estimates from service time, variability, and queue depth. Use benchmark results for measured performance claims.</p></section>
     </main>
     <footer><span>CHUNКWISE <b>·</b> SYSTEM DESIGN MICRO-PROJECT</span><span>Client-side simulation <b>·</b> No data leaves this browser</span></footer>
@@ -48,5 +52,6 @@
   <script src="app.js"></script>
 </body>
 </html>
+
 
 

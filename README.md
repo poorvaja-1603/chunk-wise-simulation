@@ -26,3 +26,4 @@ You can also deploy with the Vercel CLI from this folder using `vercel`.
 ## Modeling assumptions
 
 This is an educational approximation, not a reimplementation of Breakscale's discrete-event model. Arrivals are sampled each second. Processing capacity is derived from slots divided by service time. The engine sends an assumed 65% of its completed work to object storage to represent new chunks; this is not a benchmark measurement. Latency percentiles are estimated from simulated requests and should be labelled as simulated in reports.
+
