@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f4f7fb" />
+  <meta name="description" content="Interactive fixed-topology simulation for the ChunkWise storage deduplication engine." />
+  <title>ChunkWise | Storage Systems Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="ChunkWise home"><span class="brand-mark">CW</span><span>ChunkWise <small>STORAGE SYSTEMS LAB</small></span></a>
+      <div class="top-actions"><span class="live-state"><i></i><span id="runState">SIMULATION PAUSED</span></span><button class="button ghost" id="resetBtn">Reset run</button><button class="button primary" id="runBtn">▶&nbsp; Start simulation</button></div>
+    </header>
+    <main>
+      <section class="intro"><div><div class="eyebrow">SYSTEM DESIGN MICRO-PROJECT <span>·</span> VIRTUAL LAB</div><h1>Chunk-level storage<br><em>deduplication engine</em></h1><p>Explore how request load, processing capacity, and storage behavior shape a content-addressed storage service.</p></div><div class="intro-tag"><span>FIXED TOPOLOGY</span><strong>5 components <b>·</b> 4 connections</strong></div></section>
+      <section class="toolbar panel">
+        <div class="load-control"><div class="control-heading"><label for="loadSlider">Offered load</label><strong><span id="loadValue">1.0</span><small> req/s</small></strong></div><input id="loadSlider" type="range" min="0.1" max="8" step="0.1" value="1"><div class="range-labels"><span>0.1 req/s</span><span>8 req/s</span></div></div>
+        <div class="toolbar-divider"></div><div class="toolbar-note"><span class="note-icon">↗</span><span><b>Topology is locked</b><small>Node settings and offered load are editable. Components and connections stay fixed.</small></span></div>
+        <div class="toolbar-actions"><button class="button soft" id="exportBtn">↓&nbsp; Export design</button><label class="button soft import-button">↑&nbsp; Import design<input type="file" id="importInput" accept=".breakscale,.json,application/json" hidden></label></div>
+      </section>
+      <section class="metrics-grid" aria-label="Simulation metrics">
+        <article class="metric-card"><div class="metric-label">SYSTEM P50 <span>↗</span></div><div class="metric-value" id="p50">—<small> ms</small></div><div class="metric-foot">Typical request latency</div></article>
+        <article class="metric-card"><div class="metric-label">SYSTEM P95 <span>↗</span></div><div class="metric-value" id="p95">—<small> ms</small></div><div class="metric-foot">Slowest 1 in 20 requests</div></article>
+        <article class="metric-card"><div class="metric-label">SYSTEM P99 <span>↗</span></div><div class="metric-value" id="p99">—<small> ms</small></div><div class="metric-foot">Slowest 1 in 100 requests</div></article>
+        <article class="metric-card"><div class="metric-label">GOODPUT <span>↗</span></div><div class="metric-value" id="goodput">—<small> req/s</small></div><div class="metric-foot">Successful requests per second</div></article>
+      </section>
+      <section class="workspace">
+        <article class="panel topology-panel"><div class="panel-header"><div><div class="eyebrow">LIVE TOPOLOGY</div><h2>Request path</h2></div><div class="legend"><span><i class="legend-dot client"></i>Client</span><span><i class="legend-dot compute"></i>Compute</span><span><i class="legend-dot data"></i>Storage</span><span class="state-key"><i class="state-dot green"></i>Healthy</span><span class="state-key"><i class="state-dot yellow"></i>Busy</span><span class="state-key"><i class="state-dot red"></i>Overloaded</span></div></div>
+          <div class="topology-wrap"><svg id="topology" viewBox="0 0 940 540" role="img" aria-label="Fixed system topology diagram"></svg><div class="canvas-lock">⌑ &nbsp; Topology locked</div></div>
+          <div class="topology-footer"><span><b id="uptime">00:00</b> elapsed</span><span><i class="pulse-dot"></i>Simulation updates continuously while running</span><span id="requestCount">0 requests</span></div>
+        </article>
+        <aside class="panel inspector"><div class="panel-header inspector-heading"><div><div class="eyebrow">COMPONENT SETTINGS</div><h2>Inspector</h2></div><span class="edit-badge">EDITABLE</span></div>
+          <div id="inspectorContent" class="inspector-content"><div class="empty-inspector"><span>⌁</span><b>Select a component</b><small>Choose a node in the diagram to view and edit its settings.</small></div></div>
+        </aside>
+      </section>
+      <section class="panel charts-panel"><div class="panel-header chart-header"><div><div class="eyebrow">PERFORMANCE OVER TIME</div><h2>Latency &amp; queue depth</h2></div><div class="chart-legend"><span><i class="line-key latency"></i> P95 latency</span><span><i class="line-key queue"></i> Engine queue</span><button id="clearChart" class="icon-button" title="Clear chart history">↺</button></div></div><div class="chart-area"><canvas id="chart" aria-label="Latency and queue chart"></canvas><div class="chart-empty" id="chartEmpty">Start the simulation to collect metrics</div></div><div class="chart-xlabels"><span>60s ago</span><span>30s ago</span><span>Now</span></div></section>
+      <section class="footnote"><span>MODEL NOTE</span><p>Educational queueing simulation: system P99 comes from simulated request samples; component P99 values are estimates from service time, variability, and queue depth. Use benchmark results for measured performance claims.</p></section>
+    </main>
+    <footer><span>CHUNКWISE <b>·</b> SYSTEM DESIGN MICRO-PROJECT</span><span>Client-side simulation <b>·</b> No data leaves this browser</span></footer>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
+
+
